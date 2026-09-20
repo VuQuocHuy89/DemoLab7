@@ -32,14 +32,14 @@ class EmbeddingStore:
         # changing the behaviour of the graded API.
         self._use_chroma = False
 
-    def _make_record(self, doc: Document) -> dict[str, Any]:
+    def _make_record(self, doc: Document, embedding: list[float] | None = None) -> dict[str, Any]:
         metadata = dict(doc.metadata or {})
         metadata.setdefault("doc_id", doc.id)
         return {
             "id": doc.id,
             "content": doc.content,
             "metadata": metadata,
-            "embedding": self._embedding_fn(doc.content),
+            "embedding": embedding if embedding is not None else self._embedding_fn(doc.content),
         }
 
     def _search_records(self, query: str, records: list[dict[str, Any]], top_k: int) -> list[dict[str, Any]]:
@@ -66,8 +66,16 @@ class EmbeddingStore:
         For ChromaDB: use collection.add(ids=[...], documents=[...], embeddings=[...])
         For in-memory: append dicts to self._store
         """
-        for doc in docs:
-            self._store.append(self._make_record(doc))
+        embed_many = getattr(self._embedding_fn, "embed_many", None)
+        if callable(embed_many):
+            embeddings = embed_many([doc.content for doc in docs])
+            if len(embeddings) != len(docs):
+                raise RuntimeError("Embedding batch returned an unexpected number of vectors")
+        else:
+            embeddings = [self._embedding_fn(doc.content) for doc in docs]
+
+        for doc, embedding in zip(docs, embeddings):
+            self._store.append(self._make_record(doc, embedding))
             self._next_index += 1
 
     def search(self, query: str, top_k: int = 5) -> list[dict[str, Any]]:
