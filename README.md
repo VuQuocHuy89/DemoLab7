@@ -307,6 +307,21 @@ corpus `data/ecommerce/`; trình duyệt cũng tự refresh khi giao diện đ�
 Demo gồm:
 
 - Retrieval workspace: Agent answer grounded, top-k evidence, score và metadata/source.
+- Retrieval pipeline: Query → Chunking → Embedding → Vector store → top-k evidence → RAG Agent; kèm giải thích lý do chọn strategy và trade-off.
 - Benchmark chunking: so sánh Fixed-size, Sentence, Recursive và Heading-aware.
+- Comparison result: collection size, top cosine score, top evidence và snippet của từng strategy trên cùng Query/filter/top-k.
 - Metadata filter: lọc `buyer`, `seller` hoặc `both` trước khi retrieval.
 - Loading, empty và error states để phục vụ phần thuyết trình.
+
+### Slide thuyết trình
+
+Mở UI trước để slide cuối có thể nhúng live demo:
+
+```bash
+python ui_demo.py
+```
+
+Mở `http://localhost:8765/slides.html`. UI và slide được phục vụ bởi cùng một
+server local, nên không cần chạy thêm `python -m http.server`. Deck có 8 slide;
+dùng nút trái/phải, click vùng hai bên màn hình hoặc phím `←`/`→` để chuyển
+slide. Slide cuối nhúng trực tiếp UI cùng origin.
