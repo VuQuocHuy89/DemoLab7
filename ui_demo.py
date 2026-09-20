@@ -18,7 +18,7 @@ from src.llm import resolve_llm_from_env
 
 
 ROOT = Path(__file__).resolve().parent
-DATA_DIR = ROOT / "data" / "ecommerce"
+DATA_DIR = ROOT / "data" / "ecommerce" / "shopee"
 SLIDES_PATH = ROOT / "slides.html"
 
 

@@ -141,7 +141,7 @@ def run_benchmark(data_dir: str | Path, strategy: str) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the K4-L3B retrieval benchmark")
-    parser.add_argument("--data-dir", default="data/ecommerce")
+    parser.add_argument("--data-dir", default="data/ecommerce/shopee")
     parser.add_argument("--strategy", choices=["fixed", "sentence", "recursive", "heading"], default="sentence")
     parser.add_argument("--all-strategies", action="store_true")
     parser.add_argument("--json", action="store_true", dest="as_json")

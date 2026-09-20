@@ -302,7 +302,7 @@ python ui_demo.py
 
 Mở `http://localhost:8765`. Server chỉ bind vào localhost và tự reload khi bạn
 lưu thay đổi trong `ui_demo.py`, `src/`, `ingest.py`, `bench.py`, `.env` hoặc
-corpus `data/ecommerce/`; trình duyệt cũng tự refresh khi giao diện đổi.
+corpus `data/ecommerce/shopee/` (10 chính sách công khai); trình duyệt cũng tự refresh khi giao diện đổi.
 
 Demo gồm:
 
